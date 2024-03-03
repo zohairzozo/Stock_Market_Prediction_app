@@ -15,8 +15,8 @@ from statsmodels.tsa.stattools import adfuller
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 
 #title 
-app_name = 'Predicitve Analysis of Stock Market'
-st.title(app_name)
+app_name = "<p style='color:red; font-size: 50px; font-weight: bold; '>Forecasting the data</p>"
+st.write(app_name,unsafe_allow_html=True)
 st.subheader('This is a forecasting app for stock market price for the company of your choice')
 #add an image
 st.image('https://jupiter.money/blog/wp-content/uploads/2022/08/19.-Investment_strategies_for_beginners-1.jpg')
@@ -41,7 +41,7 @@ st.write('Data from', start_date, 'to', end_date)
 st.write(data)
 
 #plot the data 
-st.header('Data Visualization')
+st.write("<p style='color:green; font-size: 50px; font-weight: bold; '>Data Visualization</p> ", unsafe_allow_html=True)
 st.write('**Note:** Select your specific data range on the sidebar, or zoom in the plot and select your specefic columns')
 fig = px.line(data, x='Date', y=data.columns, title='Play the magic', width=1200, height=600)
 st.plotly_chart(fig)
@@ -53,11 +53,11 @@ data = data[['Date', column]]
 st.write('Selected data', data)
 
 #ADF check test for stationarity
-st.header('Is data Statioanry')
+st.write("<p style='color:green; font-size: 50px; font-style: italic; '>Is data Statioanry?</p> ", unsafe_allow_html=True)
 st.write(adfuller(data[column])[1] < 0.05)
 
 # Let's decompose the data 
-st.header('Decomposition of the data')
+st.write("<p style='color:green; font-size: 50px; font-weight: bold; '>Decomposition of Data</p> ", unsafe_allow_html=True)
 decomposition = seasonal_decompose(data[column], model= 'additive', period = 12)
 
 st.plotly_chart(px.line(x= data["Date"], y= decomposition.trend, title='Trend', width=1500, height=800, labels={'x': 'Date', 'y': 'Price'}).update_traces(line_color='Green'))
@@ -65,9 +65,9 @@ st.plotly_chart(px.line(x= data["Date"], y= decomposition.seasonal, title='Seaso
 st.plotly_chart(px.line(x= data["Date"], y= decomposition.resid, title='Residuals', width=1200, height=600, labels={'x': 'Date', 'y': 'Price'}).update_traces(line_color='Red', line_dash='dot'))
 
 #Model Building 
-st.write('Model Parameters')
+st.write("<p style='color:green; font-size: 50px; font-weight: bold; '>Model Parameters</p> ", unsafe_allow_html=True)
 p = st.slider('Select the Value of p', 0, 5, 2)
-d = st.slider('Select the Value of d', 0, 5, 2)
+d = st.slider('Select the Value of d', 0, 5, 1)
 q = st.slider('Select the Value of q', 0, 5, 2)
 seasonal_order = st.number_input('select the value of seasonal P', 0, 24, 12)
 
@@ -75,7 +75,7 @@ model = SARIMAX(data[column], order=(p,d,q), seasonal_order=(p,d,q,seasonal_orde
 model = model.fit()
 
 #print model summary 
-st.header('Model Sumamry')
+st.write("<p style='color:green; font-size: 50px; font-weight: bold; '>Model Sumamry</p> ", unsafe_allow_html=True)
 st.write(model.summary())
 st.write('---')
 
